@@ -19,7 +19,7 @@ if __name__ == "__main__":
     # generate knn object
 
     knn = KNeighborsClassifier(n_neighbors = 3)
-    dt = DecisionTreeClassifier(max_depth=5, min_samples_split=2)
+    dt = DecisionTreeClassifier(criterio='entropy', max_depth=5, min_samples_split=2)
 
     X = wifi_data[['ap0', 'ap1', 'ap2', 'ap3', 'ap4','ap5','ap6']].values
     Y = wifi_data['type'].values
@@ -29,24 +29,29 @@ if __name__ == "__main__":
     dt.fit(X,Y)
 
     # self test accuracy score
+    print('-'*30)
     print(f'Self test accuracy for KNN: {knn.score(X,Y)}.')
     print(f'Self test accuracy for DT: {dt.score(X,Y)}.')
+    print('-'*30)
 
     # find the prediction for self test for KNN
     knn_predict = knn.predict(X)
     knn_report = classification_report(Y, knn_predict)
 
+    print('-'*30)
     print("KNN CLassification Report: ")
     print(knn_report)
+    print('-'*30)
 
     # for the prediction for self test for decision tree
    
     dt_pred = dt.predict(X)
     dt_report = classification_report(Y, dt_pred)
 
+    print('-'*30)
     print("Decision Tree Classification Report")
     print(dt_report)
-
+    print('-'*30)
     # independent test 
 
     X = wifi_data[['ap0', 'ap1', 'ap2', 'ap3', 'ap4','ap5','ap6']].values
@@ -55,7 +60,6 @@ if __name__ == "__main__":
     # split data
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.3, random_state=42, stratify=y)
-
 
     # create objects
 
@@ -75,11 +79,15 @@ if __name__ == "__main__":
     knn_independent_report = classification_report(y_train, y_knn_pred)
     dt_independent_report = classification_report(y_train, y_dt_pred)
 
+    print('-'*30)
     print("KNN Independent Classification Report")
     print(knn_independent_report) 
+    print('-'*30)
 
+    print('-'*30)
     print("DT Independent Classification Report")
     print(dt_independent_report)
+    print('-'*30)
 
     # print out the scores
 
@@ -132,11 +140,9 @@ if __name__ == "__main__":
     knn_independent_tests.fit(X_train, y_train)
     fifty_percent = knn_independent_tests.score(X_train, y_train)
 
-
     scores = {'Ten':ten_percent, 'Twenty':twenty_percent, 'Thirty':thirty_percent, 'Fourty':fourty_percent, 'Fifty':fifty_percent}
     categories = list(scores.keys())
     percent = list(scores.values())
 
     plt.bar(categories, percent)
     plt.show()
-
