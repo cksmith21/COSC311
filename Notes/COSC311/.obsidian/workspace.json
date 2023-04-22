@@ -25,14 +25,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Module Two Notes.md",
+                "file": "Lab Two and Three Notes.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "f0081ff2fc893d57",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Lab Two and Three Notes.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -82,7 +94,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "adea15b6779b1b60",
@@ -98,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Module Two Notes.md",
+                "file": "Lab Two and Three Notes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Module Two Notes.md",
+                "file": "Lab Two and Three Notes.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Module Two Notes.md"
+                "file": "Lab Two and Three Notes.md"
               }
             }
           }
@@ -159,9 +171,18 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "ca7ab5246efe76fa",
+  "active": "f0081ff2fc893d57",
   "lastOpenFiles": [
-    "Module Three Notes.md",
+    "Module Five Notes.md",
+    "Lab Two and Three Notes.md",
+    "Screenshot 2023-04-18 at 11.36.42.png",
+    "Screenshot 2023-04-18 at 10.55.15.png",
+    "Screenshot 2023-04-18 at 10.43.13.png",
+    "Screenshot 2023-04-18 at 10.38.04.png",
+    "Screenshot 2023-04-18 at 10.32.43.png",
+    "Screenshot 2023-04-18 at 10.26.12.png",
+    "Screenshot 2023-04-18 at 10.15.08.png",
+    "Screenshot 2023-04-18 at 10.14.53.png",
     "Module Two Notes.md"
   ]
 }
