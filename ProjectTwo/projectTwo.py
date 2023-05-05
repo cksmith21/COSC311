@@ -18,7 +18,7 @@ if __name__ == "__main__":
     '''
         TASK ONE: Conduct k-means clustering on the wi-fi data; output the center of each 
         cluster. 
-            Use the last column as the ground truth (y_true or labels in this code) to match 
+            Use the last column as the ground truth (y_true) to match 
         each cluster with its label, calculate and output the clustering accuracy and show the 
         corresponding confusion matrix as a figure. 
             Calculate and output the clustering accuracy of each room. 
@@ -27,46 +27,67 @@ if __name__ == "__main__":
 
     # Create dataframe from the wifi data
 
-    wifi_data = pd.read_csv("wifi_localization.txt", sep="\t", \
-        names = ['ap0', 'ap1', 'ap2', 'ap3', 'ap4', 'ap5', 'ap6', 'type']) 
+    #wifi_data = pd.read_csv("wifi_localization.txt", sep="\t", header=None, names=['atr1', 'atr2', 'atr3', 'atr4', 'atr5', 'atr6', 'atr7', 'rooms'])
+    wifi_data = pd.read_csv("wifi_localization.txt", sep='\t', header=None)
+    X = wifi_data.iloc[:, :7].values
+    y_true = wifi_data.iloc[:, -1:].values
+   
+    kmeans = KMeans(n_clusters=4, random_state=42).fit(X)
 
+    # Get the cluster centers
+    cluster_centers = kmeans.cluster_centers_
+
+    # Get the predicted labels for each sample
+    y_pred = (kmeans.labels_)+1
+
+    print(*y_true)
+    print(*y_pred)
+
+    confusion = confusion_matrix(y_true, y_pred)
+
+    cm_display = metrics.ConfusionMatrixDisplay(confusion_matrix = confusion, display_labels = [1, 2, 3, 4])
+    cm_display.plot()
+    plt.show()
+   
+    '''
     # Get X and Y --> data and y_true (labels)
 
-    data = wifi_data[['ap0', 'ap1', 'ap2', 'ap3', 'ap4','ap5','ap6']].values
-    y_true = wifi_data['type'].values
+    data = wifi_data[['atr1', 'atr2', 'atr3', 'atr4', 'atr5', 'atr6', 'atr7']].values
+    y_true = wifi_data['rooms'].values-1
+
+    print(y_true)
 
     # K-means object, creating clusters
 
-    kmeans = KMeans(n_clusters=4,random_state=0)
-    clusters = kmeans.fit_predict(data)
+    kmeans = KMeans(n_clusters=4,random_state=42).fit(data)
+    #y_pred = kmeans.fit_predict(data)
+    #print(y_pred)
 
     # Getting labels and centers 
 
     labels = kmeans.labels_ 
     centers = kmeans.cluster_centers_
-
-    # Plotting the centers 
-
-    fig, ax = plt.subplots()
-    scatter = ax.scatter(data[:,0], data[:,1], c=labels, cmap='viridis')
-    centers = ax.scatter(centers[:, 0], centers[:, 1], marker='*', c='red', s=300)
-    legend = ax.legend(*scatter.legend_elements(), loc="upper right", title="Cluster")
-    plt.show()
+    print(f'The centers are {centers}.')
 
     # Creating confusion matrix
 
-    y_pred = kmeans.fit_predict(data)
-    accuracy = accuracy_score(y_true, y_pred)
-    confusion = confusion_matrix(y_true, y_pred)
+    accuracy = accuracy_score(y_true, labels)
+    confusion = confusion_matrix(y_true, labels)
+
+    cm_display = metrics.ConfusionMatrixDisplay(confusion_matrix = confusion, display_labels = [1, 2, 3, 4])
+    cm_display.plot()
+    plt.show()
+
 
     # Plotting confusion matrix
 
     fig, ax = plt.subplots()
     im = ax.imshow(confusion, cmap='Blues')
-    ax.set_xticks(np.arange(len(np.unique(labels+1))))
-    ax.set_yticks(np.arange(len(np.unique(labels+1))))
-    ax.set_xticklabels(np.unique(labels+1))
-    ax.set_yticklabels(np.unique(labels+1))
+    tick_labels = np.unique(y_true)
+    ax.set_xticks(np.arange(len(tick_labels)))
+    ax.set_yticks(np.arange(len(tick_labels)))
+    ax.set_xticklabels(tick_labels)
+    ax.set_yticklabels(tick_labels)
     ax.set_xlabel('Predicted label')
     ax.set_ylabel('True label')
     ax.set_title('Confusion matrix for Wi-Fi Signals')
@@ -77,14 +98,15 @@ if __name__ == "__main__":
 
     by_room_accurary = [] 
 
-    for i in range(4): 
-        mask = (labels ==i)
-        by_room_accurary.append(accuracy_score(labels[mask], y_pred[mask]))
+    for i in np.unique(y_true): 
+        mask = (y_true ==i)
+        by_room_accurary.append(accuracy_score(y_true[mask], labels[mask]))
 
     print("The accuracy by room is: ", end='')
     print(*by_room_accurary)
 
-    
+    '''
+
     '''
         TASK TWO: Conduct a PCA analysis on the digits dataset and find out how many 
             principal components are need to keep at least 90% variance
